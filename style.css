@@ -218,6 +218,10 @@ header[role="header"].active {
  color: #565656;
 }
 
+.logo img {
+	cursor: pointer;
+}
+
 nav[role="nav"] {
  position: absolute;
  top: 30px;
