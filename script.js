@@ -1,14 +1,13 @@
 $(document).ready(function() {
-
   // mousewheel control for swipe slider
-  $('.swiper-container').on('wheel', function(e){
-    if(e.originalEvent.wheelDelta > 0) {
-      $('.swiper-button-prev').trigger('click');
-    }
-    else {
-      $('.swiper-button-next').trigger('click');
-    }
-  });
+  // $('.swiper-container').on('wheel', function(e){
+  //   if(e.originalEvent.deltaY > 1000) {
+  //     $('.swiper-button-prev').trigger('click');
+  //   } 
+  //   else {
+  //     $('.swiper-button-next').trigger('click');
+  //   }
+  // });
 
 const interleaveOffset = 0.5;
 
@@ -16,9 +15,13 @@ const mySwiper = new Swiper ('.swiper-container', {
   // direction: 'horizontal',
   // loop: true,
   speed: 1200,
+  lazy: true,
   slideToClickedSlide: true,
   /* mousewheel cuma bisa scroll sekali, gak tau kenapa */
-  // mousewheel: true,
+  mousewheel: {
+    enable: true,
+    sensitivity: 1000
+  },
   // allowSlideNext: true,
   // allowSlidePrev: true,
   // slidePerView: 'auto',
@@ -48,13 +51,17 @@ const mySwiper = new Swiper ('.swiper-container', {
       gsap.from($(".swiper-slide.two"), 1, {autoAlpha: 0, y: 1000, delay: 0.5, ease: Power1.linear});
       gsap.from($(".swiper-slide.three"), 1, {autoAlpha: 0, y: -1000, delay: 0.5, ease: Power1.linear});
       gsap.from($(".swiper-slide.four"), 1, {autoAlpha: 0, y: 1000, delay: 0.5, ease: Power1.linear});
+
+      gsap.set($(".mask-blur"), {width: "25%", ease: Power1.linear});
       
       // remove active class when page started, karena si boss maunya dimulai dengan ukuran gallery yang sama
       $('.swiper-slide').removeClass('swiper-slide-active');
     },
-    
+
     slideChangeTransitionStart: function () {
-      $('.swiper-slide').css('transition', '1s easeIn');
+      gsap.to($(".mask-blur"), 1, {width: "100%", ease: Power0.easeNone});      
+      gsap.from($(".swiper-slide.swiper-slide-active .mask-blur"), 1, {width: "8%", ease: Power0.easeNone});      
+      $('.swiper-slide').css('transition', '1s linear');
       // Slide captions
       const swiper = this;
       setTimeout(function () {
@@ -67,6 +74,7 @@ const mySwiper = new Swiper ('.swiper-container', {
     },
 
     slideChangeTransitionEnd: function () {
+      console.log('end');
       // Slide captions
       const swiper = this;
       const currentTitle = $(swiper.slides[swiper.activeIndex]).attr("data-title");
@@ -79,8 +87,6 @@ const mySwiper = new Swiper ('.swiper-container', {
     },
   },
 });
-
-
 
 
 
