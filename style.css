@@ -21,6 +21,10 @@
         z-index: 3;
         display: none;
       }
+
+      .logo {
+        cursor: pointer;
+      }
       
       /* Swiper */
       .swiper-container {
